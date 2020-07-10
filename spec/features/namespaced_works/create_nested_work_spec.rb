@@ -4,7 +4,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 
 # NOTE: If you generated more than one work, you have to set "js: true"
-RSpec.feature 'Create a NamespacedWorks::NestedWork', js: false do
+RSpec.feature 'Create a NamespacedWorks::NestedWork', js: true do
   context 'a logged in user' do
     let(:user_attributes) do
       { email: 'test@example.com' }
@@ -36,16 +36,16 @@ RSpec.feature 'Create a NamespacedWorks::NestedWork', js: false do
       click_link "Add new work"
 
       # If you generate more than one work uncomment these lines
-      # choose "payload_concern", option: "NamespacedWorks::NestedWork"
-      # click_button "Create work"
+      choose "payload_concern", option: "NamespacedWorks::NestedWork"
+      click_button "Create work"
 
-      expect(page).to have_content "Add New Nested work"
+      expect(page).to have_content /Add New Nested work/i
       click_link "Files" # switch tab
       expect(page).to have_content "Add files"
       expect(page).to have_content "Add folder"
       within('span#addfiles') do
-        attach_file("files[]", "#{Hyrax::Engine.root}/spec/fixtures/image.jp2", visible: false)
-        attach_file("files[]", "#{Hyrax::Engine.root}/spec/fixtures/jp2_fits.xml", visible: false)
+        attach_file("files[]", Rails.root.join('spec', 'fixtures', 'hyrax', 'image.jp2'), visible: false)
+        attach_file("files[]", Rails.root.join('spec', 'fixtures', 'hyrax', 'jp2_fits.xml'), visible: false)
       end
       click_link "Descriptions" # switch tab
       fill_in('Title', with: 'My Test Work')
@@ -57,7 +57,7 @@ RSpec.feature 'Create a NamespacedWorks::NestedWork', js: false do
       # select box. Click outside the box so the next line can't find
       # its element
       find('body').click
-      choose('nested_work_visibility_open')
+      choose('namespaced_works_nested_work_visibility_open')
       expect(page).to have_content('Please note, making something visible to the world (i.e. marking this as Public) may be viewed as publishing which could impact your ability to')
       check('agreement')
 
