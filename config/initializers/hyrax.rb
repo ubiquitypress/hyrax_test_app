@@ -1,4 +1,13 @@
 Hyrax.config do |config|
+  # Hyrax can integrate with Zotero's Arkivo service for automatic deposit
+  # of Zotero-managed research items.
+  # Defaults to false.  See README for more info
+  config.arkivo_api = true
+
+  # Injected via `rails g hyrax:work GenericWork`
+  config.register_curation_concern :generic_work
+  # Injected via `rails g hyrax:work NamespacedWorks::NestedWork`
+  config.register_curation_concern :"namespaced_works/nested_work"
   # Register roles that are expected by your implementation.
   # @see Hyrax::RoleRegistry for additional details.
   # @note there are magical roles as defined in Hyrax::RoleRegistry::MAGIC_ROLES
@@ -43,7 +52,7 @@ Hyrax.config do |config|
   # Enable displaying usage statistics in the UI
   # Defaults to false
   # Requires a Google Analytics id and OAuth2 keyfile.  See README for more info
-  # config.analytics = false
+  config.analytics = true
 
   # Google Analytics tracking ID to gather usage statistics
   # config.google_analytics_id = 'UA-99999999-1'
@@ -134,7 +143,7 @@ Hyrax.config do |config|
   #   * iiif_image_size_default
   #
   # Default is false
-  # config.iiif_image_server = false
+  config.iiif_image_server = true
 
   # Returns a URL that resolves to an image provided by a IIIF image server
   config.iiif_image_url_builder = lambda do |file_id, base_url, size|
