@@ -1,3 +1,4 @@
+######### Copied from db/seeds.rb
 ActiveFedora.fedora.connection.send(:init_base_path)
 
 puts "\n== Creating default collection types"
@@ -18,3 +19,19 @@ admin_set_id = AdminSet.find_or_create_default_admin_set_id
 # ensuring we have an indexed AdminSet
 puts "\n== Ensuring the found or created admin set is indexed"
 AdminSet.find(admin_set_id).update_index
+
+######### Copied from .dassie/db/seeds.rb
+Hyrax::Engine.load_seed unless ActiveModel::Type::Boolean.new.cast(ENV["SKIP_HYRAX_ENGINE_SEED"])
+
+puts "\n== Loading users"
+User.where(email: 'admin@example.com').first_or_create do |f|
+  f.password = 'admin_password'
+end
+
+User.where(email: 'basic_user@example.com').first_or_create do |f|
+  f.password = 'password'
+end
+
+User.where(email: 'another_user@example.com').first_or_create do |f|
+  f.password = 'password'
+end

@@ -1,6 +1,6 @@
 development:
   admin:
-    - archivist1@example.com
+    - admin@example.com
   archivist:
     - archivist1@example.com
 
